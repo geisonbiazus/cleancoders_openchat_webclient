@@ -9,6 +9,8 @@ axios.interceptors.response.use(
     : Promise.reject(error)
 )
 
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+
 const parse = data => new User({
   id: data.id,
   name: data.username,
@@ -29,7 +31,8 @@ class UserService {
     }
     const response = await axios.post(
       `${process.env.REACT_APP_API_URL}users`,
-      JSON.stringify(request))
+      JSON.stringify(request)
+    )
 
     this.user = parse(response.data)
     localStorage.setItem('user', JSON.stringify(this.user))
